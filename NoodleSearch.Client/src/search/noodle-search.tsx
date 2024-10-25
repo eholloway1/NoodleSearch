@@ -11,7 +11,9 @@ export type imgList = {
 function NoodleSearch() {
     const [query, setQuery] = useState("Noodle");
     const [searchResult, setSearchResult] = useState<imgList>();
-    const url = ``;
+    const api_key = "";
+    const engine_id = "";
+    const url = `https://www.googleapis.com/customsearch/v1?key=${api_key}&cx=${engine_id}f238b1c279426487b&searchType=image&q=${query}water`;
 
     async function fetcher(url: string) {
         const response = await fetch(url);
