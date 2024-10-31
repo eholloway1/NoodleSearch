@@ -1,6 +1,7 @@
 # Created by https://www.toptal.com/developers/gitignore/api/react,visualstudio
 # Edit at https://www.toptal.com/developers/gitignore?templates=react,visualstudio
 
+.env
 ### react ###
 .DS_*
 *.log
