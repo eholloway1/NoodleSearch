@@ -27,13 +27,12 @@ function NoodleSearch() {
     
     useEffect(() => {
         fetcher(url);
-    }, []);
+    }, [noodleOrNot]);
 
     return (
         <div>
             <ToggleButton value="Noodle It!" color="primary" selected={noodleOrNot} onChange={() => {
                 setNoodleOrNot((noodleOrNot) => !noodleOrNot)
-                fetcher(url)
             }}>Noodle It!</ToggleButton>
         <Box component="form" sx={{ '& > :not(style)': { m: 1, width: '25ch' } }} noValidate autoComplete="off" >
             <TextField id="outlined-basic" label="Filled" variant="filled" placeholder="Noodle it!"
