@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import {Button, TextField, Box} from "@mui/material";
+import {Button, TextField, Box, ImageList, ImageListItem} from "@mui/material";
 
 export type googleItem = {
     title: string
@@ -12,7 +12,7 @@ export type imgList = {
 function NoodleSearch() {
     const [query, setQuery] = useState("spaghetti");
     const NoodleIt = "Noodle"
-    const [searchResult, setSearchResult] = useState<imgList>();
+    const [searchResult, setSearchResult] = useState<imgList | undefined | null>();
     const engine_id = "f238b1c279426487b";
     const GOOGLE_API_KEY = "AIzaSyCd4xJ0yIbfkN19JX4xxeKzE1aenYxqQBA";
     const url = `https://www.googleapis.com/customsearch/v1?key=${GOOGLE_API_KEY}&cx=${engine_id}&searchType=image&q=${NoodleIt}${query}water`;
@@ -35,7 +35,13 @@ function NoodleSearch() {
             <Button variant="contained" onClick={() => {
                 fetcher(url);
             }}>Search</Button>
-            <img src={searchResult?.items[0].link} />
+            <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
+                {searchResult? searchResult.items.map((item) => (
+                    <ImageListItem key={item.link}>
+                        <img srcSet={item.link} src={item.link} alt={item.title} loading={"lazy"}/>
+                    </ImageListItem>
+                )) : <img src={""}/>}
+            </ImageList>
         </div>
   );
 }
