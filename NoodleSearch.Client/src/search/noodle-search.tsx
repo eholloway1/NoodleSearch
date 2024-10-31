@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import {Button, TextField, Box, ImageList, ImageListItem} from "@mui/material";
+import {Button, TextField, Box, ImageList, ImageListItem, ToggleButton} from "@mui/material";
 
 export type googleItem = {
     title: string
@@ -11,11 +11,14 @@ export type imgList = {
 
 function NoodleSearch() {
     const [query, setQuery] = useState("spaghetti");
-    const NoodleIt = "Noodle"
+    const NoodleIt = "Noodle";
+    const [noodleOrNot, setNoodleOrNot] = useState(true);
     const [searchResult, setSearchResult] = useState<imgList | undefined | null>();
     const engine_id = "f238b1c279426487b";
     const GOOGLE_API_KEY = "AIzaSyCd4xJ0yIbfkN19JX4xxeKzE1aenYxqQBA";
-    const url = `https://www.googleapis.com/customsearch/v1?key=${GOOGLE_API_KEY}&cx=${engine_id}&searchType=image&q=${NoodleIt}${query}water`;
+    const url = noodleOrNot ? 
+        `https://www.googleapis.com/customsearch/v1?key=${GOOGLE_API_KEY}&cx=${engine_id}&searchType=image&q=${NoodleIt}+`+`${query}`
+    : `https://www.googleapis.com/customsearch/v1?key=${GOOGLE_API_KEY}&cx=${engine_id}&searchType=image&q=${query}`;
     async function fetcher(url: string) {
         const response = await fetch(url);
         const json = await response.json();
@@ -28,6 +31,10 @@ function NoodleSearch() {
 
     return (
         <div>
+            <ToggleButton value="Noodle It!" color="primary" selected={noodleOrNot} onChange={() => {
+                setNoodleOrNot((noodleOrNot) => !noodleOrNot)
+                fetcher(url)
+            }}>Noodle It!</ToggleButton>
         <Box component="form" sx={{ '& > :not(style)': { m: 1, width: '25ch' } }} noValidate autoComplete="off" >
             <TextField id="outlined-basic" label="Filled" variant="filled" placeholder="Noodle it!"
                 onChange={(e) => setQuery(e.target.value)}/>
